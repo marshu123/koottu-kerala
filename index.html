@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Koottu (കൂട്ട്) - Kerala Community Safe Stay & Travel Companion Network across India</title>
+  <meta name="description" content="Pan-India community platform connecting job seekers, students, and travelers from Kerala with trusted Malayali hosts across all Indian states and major cities for free safe stay, GPS route navigation, and native language guidance.">
+  <meta name="keywords" content="Kerala, Malayali in UP, Malayali in Delhi, Malayali in Mumbai, Kerala job interview travel help, NORKA, Kerala Samajam, safe stay for students">
+  
+  <!-- Modern Typography (Plus Jakarta Sans, Manrope, Noto Sans Malayalam) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS for OpenStreetMap (Zero API key needed) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="top-announcement" aria-label="Official helpline announcement">
+    <div class="top-announcement-content">
+      <span class="badge-pill">🛡️ 24x7 Safe Support</span>
+      <span data-i18n="norkaBanner">
+        Official NORKA Roots 24x7 Helpline for Malayalis in other states: <strong>1800-425-3939</strong> (Toll Free)
+      </span>
+      <span class="norka-link" onclick="window.KoottuApp.openSosModal()">[View All Helplines]</span>
+    </div>
+  </aside>
+
+  <!-- Sticky Header & Nav -->
+  <header class="header-nav">
+    <div class="nav-container">
+      <div class="brand-logo-wrap" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <div class="brand-icon">കൂ</div>
+        <div class="brand-titles">
+          <span class="brand-title">Koottu <span style="font-size: 0.95rem; font-weight:700; color:var(--accent-gold);">| കൂട്ട്</span></span>
+          <span class="brand-tagline" data-i18n="siteTagline">Kerala Community Safe Stay & Travel Companion</span>
+        </div>
+      </div>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><span class="nav-link active" onclick="window.KoottuApp.switchTab('hosts')">🏠 <span data-i18n="tabHosts">Verified Hosts</span></span></li>
+          <li><span class="nav-link" onclick="window.KoottuApp.switchTab('requests')">📢 <span data-i18n="tabRequests">Candidate SOS</span></span></li>
+          <li><span class="nav-link" onclick="window.KoottuApp.switchTab('survival')">🗣️ <span data-i18n="tabSurvival">Hindi Survival Guide</span></span></li>
+          <li><span class="nav-link" onclick="window.KoottuApp.switchTab('emergency')">🛡️ <span data-i18n="tabEmergency">Helplines</span></span></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn-owner-desk" id="ownerDeskBtn" onclick="window.KoottuApp.openOwnerModal()" title="Manage My Website & Founder Profile">
+          👑 My Founder Desk
+        </button>
+        <button class="btn-lang-toggle" id="langToggleBtn" title="Change Language / ഭാഷ മാറ്റുക">
+          🇮🇳 മലയാളം
+        </button>
+        <button class="btn-theme-toggle" id="themeToggleBtn" title="Toggle Theme">
+          🌙 Dark
+        </button>
+        <button class="btn-sos" id="sosHeaderBtn" onclick="window.KoottuApp.openSosModal()">
+          <span data-i18n="sosButton">🚨 Emergency SOS</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-pill">
+          <span>🤝</span>
+          <span>Connecting Malayalis Across All Indian States • 100% Free Public Service</span>
+        </div>
+
+        <h1 class="hero-headline" data-i18n="heroHeadline">
+          Traveling to any state for an interview? <span class="highlight-word">You are never alone.</span>
+        </h1>
+
+        <p class="hero-subtitle" data-i18n="heroSubtitle">
+          Connecting underprivileged job seekers, students, and exam candidates from Kerala with trusted local Malayali hosts, free safe stays, and native language guidance in Uttar Pradesh, Delhi, Maharashtra, Karnataka & across India.
+        </p>
+
+        <div class="hero-trust-badges">
+          <div class="trust-badge-item">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            <span>All 28 States & Major Indian Cities Covered</span>
+          </div>
+          <div class="trust-badge-item">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            <span>Live GPS Location & Distance Calculation</span>
+          </div>
+          <div class="trust-badge-item">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            <span>Free 1-2 Night Shelter for Low-Budget Candidates</span>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <button class="btn-primary" onclick="window.KoottuApp.switchTab('hosts')">
+            <span>🔍</span>
+            <span data-i18n="btnFindHost">Find a Malayali Host</span>
+          </button>
+          <button class="btn-secondary" onclick="window.KoottuApp.openPostRequestModal()">
+            <span>📢</span>
+            <span data-i18n="btnPostRequest">Ask for Travel Help</span>
+          </button>
+          <button class="btn-secondary" onclick="window.KoottuApp.openVolunteerModal()" style="border-style:dashed;">
+            <span>❤️</span>
+            <span data-i18n="btnVolunteer">Join as a Volunteer Host</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-image-card">
+        <img src="assets/hero-banner.jpg" alt="Malayali welcoming an anxious student traveler at the railway station" width="600" height="340">
+        <div class="hero-image-overlay">
+          <p class="overlay-quote">
+            "When you get down at Charbagh station in Uttar Pradesh at 4 AM, hearing a gentle 'നമസ്കാരം, പേടിക്കണ്ട, റൂമിലേക്ക് പോകാം' makes all fear disappear."
+          </p>
+          <p class="overlay-author">— Lucknow Malayali Student Volunteer Circle</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Living Care & Reassurance Banner -->
+  <div style="padding: 24px 20px 0;">
+    <div class="warm-care-card">
+      <div class="warm-care-icon">☕</div>
+      <div class="warm-care-text">
+        <h4>ഒരു വെബ്സൈറ്റ് മാത്രമല്ല — ദൂരദേശങ്ങളിൽ നമ്മൾ പരസ്പരം കാണുന്ന ജീവനുള്ള സ്നേഹമാണിത്</h4>
+        <p>
+          "പണമില്ലെന്നോ, അറിയാത്ത നാടാണെന്നോ, ഹിന്ദി അറിയില്ലെന്നോ ഓർത്ത് ഒരു കാരണവശാലും നിങ്ങളുടെ സ്വപ്നങ്ങളും ഇന്റർവ്യൂവും ഉപേക്ഷിക്കരുത്. ഉത്തർപ്രദേശിലും ഇന്ത്യയിലെവിടെയും സ്വന്തം വീടുപോലെ സഹായിക്കാൻ മലയാളി സഹോദരങ്ങൾ കാത്തിരിക്കുന്നു."
+        </p>
+      </div>
+    </div>
+
+    <!-- Founder & Initiator Card -->
+    <div class="founder-card-banner" id="founderCardBanner">
+      <div class="founder-avatar-circle" id="founderAvatarLetter">K</div>
+      <div class="founder-details">
+        <h4>
+          <span id="founderDisplayName">Created by a Fellow Malayali for Kerala</span>
+          <span style="font-size:0.75rem; background:var(--accent-gold); color:#451a03; padding:2px 8px; border-radius:12px; font-weight:800;">FOUNDER & CREATOR</span>
+        </h4>
+        <p id="founderStoryText">
+          "ഞാൻ കേരളത്തിൽ നിന്ന് ഉത്തർപ്രദേശിലേക്കും മറ്റ് സംസ്ഥാനങ്ങളിലേക്കും പോകുന്ന സാധാരണക്കാരുടെ ഭയവും പണമില്ലായ്മയും മാറ്റാനായി തുടങ്ങിയതാണ് ഈ പ്ലാറ്റ്ഫോം. നിങ്ങൾ ഒട്ടും തനിച്ചല്ല. ഇത് എന്റെ സ്വന്തം നാടിനും സഹോദരങ്ങൾക്കുമായി സമർപ്പിക്കുന്നു."
+        </p>
+      </div>
+      <div>
+        <button class="btn-owner-desk" onclick="window.KoottuApp.openOwnerModal()">
+          <span>👑 Set My Name & Story</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Search & Match Filter Bar -->
+  <div class="search-banner-container">
+    <div class="search-box-card">
+      
+      <!-- Live GPS Location Action Bar -->
+      <div class="location-status-bar">
+        <div class="location-indicator">
+          <span class="gps-dot" id="gpsDot"></span>
+          <span id="locationStatusText" data-i18n="locationInactive">Location is OFF. Tap to detect nearby hosts via GPS.</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button class="btn-turn-location" id="btnTurnLocation">
+            <span>📍</span>
+            <span data-i18n="btnTurnLocation">📍 Turn Location ON</span>
+          </button>
+          <div class="view-toggle-group">
+            <button class="btn-view-toggle active" id="btnListView" data-i18n="viewList">📋 List View</button>
+            <button class="btn-view-toggle" id="btnMapView" data-i18n="viewMap">🗺️ Map View</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="search-header-row">
+        <div class="search-title">
+          <span>🎯</span>
+          <span data-i18n="searchHeader">Find Malayalis in Your Destination</span>
+        </div>
+        <span style="font-size:0.82rem; color:var(--text-muted);">
+          Select any State and Major City across India, or turn Location ON to auto-sort by proximity
+        </span>
+      </div>
+
+      <!-- Cascading States & Cities Search Inputs -->
+      <div class="search-grid-inputs" style="grid-template-columns: 1fr 1fr 1.2fr auto;">
+        <div class="input-field-group">
+          <label class="input-label" data-i18n="searchStateLabel">1. Destination State / UT</label>
+          <select id="stateSelect" class="custom-select">
+            <!-- Populated dynamically by app.js with all 28 states & UTs -->
+          </select>
+        </div>
+
+        <div class="input-field-group">
+          <label class="input-label" data-i18n="searchCityLabel">2. Destination City</label>
+          <select id="citySelect" class="custom-select">
+            <option value="all">All Major Cities</option>
+          </select>
+        </div>
+
+        <div class="input-field-group">
+          <label class="input-label" data-i18n="searchKeywordLabel">Search by college, location or name</label>
+          <input type="text" id="searchInput" class="custom-input" placeholder="e.g. Charbagh, Metro, IIT, Hospital..." data-i18n-placeholder="searchKeywordLabel">
+        </div>
+
+        <div class="input-field-group" style="justify-content: flex-end;">
+          <button class="btn-filter-search" onclick="window.KoottuApp.openPostRequestModal()">
+            <span>📢 Post Travel SOS</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tag Filters -->
+      <div class="filter-tags-row">
+        <span style="font-size: 0.78rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Quick Filter:</span>
+        <button class="filter-tag-btn active" data-tag="all">
+          <span data-i18n="tagAll">All Helpers</span>
+        </button>
+        <button class="filter-tag-btn" data-tag="free-stay">
+          <span data-i18n="tagFreeStay">🏠 Free / Low Budget Stay</span>
+        </button>
+        <button class="filter-tag-btn" data-tag="route-guide">
+          <span data-i18n="tagRouteGuide">🚆 Station & Route Guide</span>
+        </button>
+        <button class="filter-tag-btn" data-tag="malayalam-buddy">
+          <span data-i18n="tagMalayalamBuddy">🗣️ Malayalam Speaker</span>
+        </button>
+        <button class="filter-tag-btn" data-tag="women-only">
+          <span data-i18n="tagWomenOnly">👩 Female Safe Haven</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="main-content">
+    
+    <!-- Navigation Tabs -->
+    <div class="tab-switcher" role="tablist">
+      <button class="tab-btn active" data-tab="hosts" role="tab">
+        <span>🏠</span>
+        <span data-i18n="tabHosts">Verified Malayali Hosts</span>
+      </button>
+      <button class="tab-btn" data-tab="requests" role="tab">
+        <span>📢</span>
+        <span data-i18n="tabRequests">Candidate SOS Travel Board</span>
+      </button>
+      <button class="tab-btn" data-tab="survival" role="tab">
+        <span>🗣️</span>
+        <span data-i18n="tabSurvival">Hindi-Malayalam Survival Toolkit</span>
+      </button>
+      <button class="tab-btn" data-tab="emergency" role="tab">
+        <span>🛡️</span>
+        <span data-i18n="tabEmergency">Emergency & Samajam Helplines</span>
+      </button>
+    </div>
+
+    <!-- TAB 1: Verified Malayali Hosts Section -->
+    <section id="hostsSection">
+      <div class="section-header-block">
+        <div class="section-title-wrap">
+          <h2>
+            <span>🤝</span>
+            <span>Malayali Volunteers & Community Stays</span>
+          </h2>
+          <p>
+            Verified Malayali students, working professionals, and families across India ready to guide you or offer shelter.
+          </p>
+        </div>
+        <button class="btn-secondary" onclick="window.KoottuApp.openVolunteerModal()">
+          <span>➕</span>
+          <span>Register as a Volunteer</span>
+        </button>
+      </div>
+
+      <!-- Interactive Leaflet Map Container -->
+      <div id="interactiveMapContainer" class="map-view-container" style="display: none;"></div>
+
+      <!-- Host Card Grid -->
+      <div class="cards-grid" id="hostsGrid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- TAB 2: Candidate SOS Requests Section -->
+    <section id="requestsSection" style="display: none;">
+      <div class="section-header-block">
+        <div class="section-title-wrap">
+          <h2>
+            <span>📢</span>
+            <span data-i18n="candidateFeedTitle">Candidates Seeking Help in Distant States</span>
+          </h2>
+          <p data-i18n="candidateFeedSubtitle">
+            Fellow Malayalis traveling on tight budgets for career exams. If you live in these cities, please lend a helping hand.
+          </p>
+        </div>
+        <button class="btn-primary" onclick="window.KoottuApp.openPostRequestModal()">
+          <span>✏️</span>
+          <span data-i18n="btnShareRequest">Post Your Travel Request</span>
+        </button>
+      </div>
+
+      <div class="request-feed-list" id="requestsList">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- TAB 3: Survival Toolkit & Hindi-Malayalam Guides -->
+    <section id="survivalSection" style="display: none;">
+      <div class="section-header-block">
+        <div class="section-title-wrap">
+          <h2>
+            <span>🗣️</span>
+            <span data-i18n="survivalTitle">Essential Hindi Phrases for Malayalis</span>
+          </h2>
+          <p data-i18n="survivalSubtitle">
+            Read out or play speech so auto drivers and conductors understand you with zero trouble.
+          </p>
+        </div>
+      </div>
+
+      <div class="survival-grid">
+        <!-- Left: Spoken Phrases with Audio Preview -->
+        <div class="survival-card">
+          <div class="survival-card-header">
+            <div class="survival-card-icon">🔊</div>
+            <div>
+              <h3 class="survival-card-title">Phonetic Speech Cards (ഓഡിയോ കേൾപ്പിക്കാം)</h3>
+              <p style="font-size:0.8rem; color:var(--text-muted);">Tap the speaker icon to play Hindi pronunciation aloud</p>
+            </div>
+          </div>
+          <div id="survivalPhrasesList">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+        </div>
+
+        <!-- Right: Scam Avoidance & Low Budget Survival Tips -->
+        <div class="survival-card">
+          <div class="survival-card-header">
+            <div class="survival-card-icon">💡</div>
+            <div>
+              <h3 class="survival-card-title">Station Survival & Zero-Budget Tips</h3>
+              <p style="font-size:0.8rem; color:var(--text-muted);">How to travel safely on less than ₹200</p>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-gold);">
+              <h4 style="font-size: 0.92rem; font-weight:700; color:var(--text-main); margin-bottom: 4px;">
+                🚂 Railway Station AC Waiting Rooms (₹20 - ₹30)
+              </h4>
+              <p style="font-size:0.84rem; color:var(--text-muted); line-height: 1.5;">
+                Never spend ₹1,500 on shady station hotels. Major stations across India (Lucknow, New Delhi, Kanpur, Dadar, Chennai) have official IRCTC AC Lounges on Platform 1. Showing your valid train ticket allows you to rest, charge your phone, and use clean bathrooms for just ₹20–₹30 per hour.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm); border-left: 4px solid var(--primary-500);">
+              <h4 style="font-size: 0.92rem; font-weight:700; color:var(--text-main); margin-bottom: 4px;">
+                🚖 Auto Tout Scam at Railway Exits
+              </h4>
+              <p style="font-size:0.84rem; color:var(--text-muted); line-height: 1.5;">
+                Private brokers will approach you inside train compartments saying "Hotel chahiye? Auto chahiye?". <strong>Firmly ignore them</strong>. Walk out to the official Pre-Paid Booth or use the Rapido / Uber auto app on your phone, or take the direct Metro.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm); border-left: 4px solid var(--success-500);">
+              <h4 style="font-size: 0.92rem; font-weight:700; color:var(--text-main); margin-bottom: 4px;">
+                🍱 Safe Budget Food & Gurudwaras
+              </h4>
+              <p style="font-size:0.84rem; color:var(--text-muted); line-height: 1.5;">
+                Look for IRCTC Jan Aahaar cafeterias at stations for ₹20 Janata Khana or nearby Gurudwaras (e.g. Naka Hindola in Lucknow, Bangla Sahib in Delhi) where free hot langar meals are served with utmost dignity and warmth to anyone in need.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Emergency Contacts & Samajams Section -->
+    <section id="emergencySection" style="display: none;">
+      <div class="section-header-block">
+        <div class="section-title-wrap">
+          <h2>
+            <span>🛡️</span>
+            <span>Emergency Directory & Kerala Samajams</span>
+          </h2>
+          <p>
+            Important official telephone numbers, Malayali associations, and rescue helplines for candidates in North India.
+          </p>
+        </div>
+      </div>
+
+      <div class="survival-grid">
+        <div class="survival-card">
+          <div class="survival-card-header">
+            <div class="survival-card-icon" style="background:var(--danger-100); color:var(--danger-700);">🚨</div>
+            <div>
+              <h3 class="survival-card-title">Government & Police 24x7 Helplines</h3>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--bg-main); border-radius:var(--radius-sm);">
+              <div>
+                <strong>NORKA Roots (Govt of Kerala)</strong>
+                <div style="font-size:0.8rem; color:var(--text-muted);">24x7 Interstate Malayali Cell</div>
+              </div>
+              <a href="tel:18004253939" class="btn-primary" style="padding:6px 14px; font-size:0.82rem;">📞 1800 425 3939</a>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--bg-main); border-radius:var(--radius-sm);">
+              <div>
+                <strong>Indian Railways Police (RPF)</strong>
+                <div style="font-size:0.8rem; color:var(--text-muted);">Any security issue in trains/stations</div>
+              </div>
+              <a href="tel:139" class="btn-secondary" style="padding:6px 14px; font-size:0.82rem;">📞 139</a>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--bg-main); border-radius:var(--radius-sm);">
+              <div>
+                <strong>UP Women Power Line / National Women Help</strong>
+                <div style="font-size:0.8rem; color:var(--text-muted);">Immediate safety helpline for female travelers</div>
+              </div>
+              <a href="tel:1090" class="btn-secondary" style="padding:6px 14px; font-size:0.82rem; color:var(--danger-700); border-color:var(--danger-500);">📞 1090</a>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--bg-main); border-radius:var(--radius-sm);">
+              <div>
+                <strong>Emergency Police / Ambulance</strong>
+                <div style="font-size:0.8rem; color:var(--text-muted);">National unified emergency response</div>
+              </div>
+              <a href="tel:112" class="btn-secondary" style="padding:6px 14px; font-size:0.82rem;">📞 112</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="survival-card">
+          <div class="survival-card-header">
+            <div class="survival-card-icon" style="background:var(--primary-100); color:var(--primary-800);">🏛️</div>
+            <div>
+              <h3 class="survival-card-title">Kerala Samajams & Houses Across India</h3>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.88rem;">
+            <div style="background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm);">
+              <strong>Kerala House (New Delhi)</strong>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:3px;">
+                3, Jantar Mantar Road, New Delhi • Official Govt. of Kerala liaison center. Phone: 011-23383419.
+              </div>
+            </div>
+
+            <div style="background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm);">
+              <strong>Lucknow Malayali Samajam (LMS)</strong>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:3px;">
+                Gomti Nagar / Aliganj, Lucknow, UP • Supporting students & job candidates arriving in UP.
+              </div>
+            </div>
+
+            <div style="background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm);">
+              <strong>Bombay Malayalee Samajam (Mumbai)</strong>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:3px;">
+                Dadar / Vashi • Extensive volunteer network across Central & Western railway lines.
+              </div>
+            </div>
+
+            <div style="background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm);">
+              <strong>Bangalore Malayali Association</strong>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:3px;">
+                Koramangala / Indiranagar, Bengaluru • Assisting tech & competitive exam aspirants.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- OWNER / FOUNDER DESK MODAL -->
+  <div class="modal-overlay" id="ownerModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-bottom-color: #f59e0b;">
+        <div class="modal-title" style="color: #78350f;">
+          <span>👑</span>
+          <span>My Founder Desk (എന്റെ സ്വന്തം പ്ലാറ്റ്ഫോം)</span>
+        </div>
+        <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="ownerForm">
+        <div class="modal-body">
+          <div style="background: var(--bg-main); padding: 14px; border-radius: var(--radius-sm); font-size: 0.88rem; line-height: 1.5; border-left: 4px solid var(--accent-gold);">
+            <strong>Make this website 100% yours:</strong>
+            <p style="color:var(--text-muted); margin-top:4px;">
+              Enter your name and details. This will brand the entire website under your name as the founder and community initiator!
+            </p>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Your Name / നിങ്ങളുടെ പേര് *</label>
+              <input type="text" id="ownerInputName" class="form-input" placeholder="e.g. Marsh / അനീഷ് കുമാർ" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Your District in Kerala / ജില്ല *</label>
+              <select id="ownerInputDistrict" class="form-select">
+                <!-- Populated dynamically with all Kerala districts -->
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Your Direct WhatsApp / Phone</label>
+              <input type="tel" id="ownerInputPhone" class="form-input" placeholder="+91 9xxxx xxxxx">
+              <span class="form-hint">So candidates can reach you directly for guidance.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Your Title / Role</label>
+              <input type="text" id="ownerInputRole" class="form-input" placeholder="e.g. Founder & Kerala Community Lead">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Personal Story / Message to Candidates *</label>
+            <textarea id="ownerInputStory" class="form-textarea" placeholder="Explain why you created this platform: 'I know how terrifying it is to travel to UP or far away without money or knowing Hindi. I built this so no Malayali ever feels alone.'" required></textarea>
+          </div>
+
+          <!-- Free Hosting & Publishing Guide -->
+          <div style="background: var(--primary-50); border: 1px solid var(--primary-100); border-radius: var(--radius-sm); padding: 12px; font-size: 0.84rem;">
+            <strong style="color:var(--primary-800);">🚀 How to launch this website online under your name (100% Free):</strong>
+            <ol style="margin-left: 18px; margin-top: 6px; color:var(--text-main); line-height:1.5;">
+              <li>Upload this folder to <strong>GitHub</strong> (or drag and drop to <strong>Netlify / Vercel</strong>).</li>
+              <li>You instantly get your own live link: <code>https://your-name.netlify.app</code> or <code>https://your-name.github.io/koottu</code></li>
+              <li>You can also connect your own custom domain (e.g. <code>koottu.in</code> or <code>mykeralaconnect.org</code>)!</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-close-btn">Cancel</button>
+          <button type="submit" class="btn-primary" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #451a03;">
+            <span>💾 Save As My Website</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 1: Contact Host Modal with Auto-Message Builder -->
+  <div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>🤝</span>
+          <span data-i18n="contactModalTitle">Connect with Malayali Helper</span>
+        </div>
+        <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div>
+          <h3 id="modalHostName" style="font-size: 1.25rem; font-weight:800; color:var(--text-main);"></h3>
+          <p id="modalHostRole" style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;"></p>
+          <div id="modalHostLocation" style="font-size:0.82rem; font-weight:600; color:var(--primary-700); margin-top:4px;"></div>
+        </div>
+
+        <div style="background: var(--bg-main); padding: 14px; border-radius: var(--radius-sm); font-size: 0.88rem; line-height: 1.5;">
+          <strong>About Host & Help Offered:</strong>
+          <p id="modalHostAbout" style="color:var(--text-muted); margin-top:6px;"></p>
+        </div>
+
+        <div>
+          <strong style="font-size: 0.85rem;">Available Amenities & Facilities:</strong>
+          <div id="modalAmenitiesList" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;"></div>
+        </div>
+
+        <!-- Safe Pre-composed Message Template -->
+        <div class="message-template-card">
+          <div class="template-header">
+            <span>✨ Pre-drafted Polite Message (ലജ്ജയും പേടിയും വേണ്ട)</span>
+            <button class="phrase-audio-btn" onclick="window.KoottuApp.copyMessageTemplate()">📋 Copy Text</button>
+          </div>
+          <div class="template-text-box" id="modalMessageMalayalam"></div>
+          <div class="template-text-box" id="modalMessageEnglish" style="font-size:0.82rem; color:var(--text-muted); margin-top:6px;"></div>
+        </div>
+
+        <div style="font-size: 0.78rem; color:var(--text-dim); line-height:1.4;">
+          🛡️ <em>Safety Advisory: Never share your OTP, original educational certificates, or banking credentials with anyone. Koottu connects verified volunteers to offer hospitality and route guidance in good faith.</em>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary modal-close-btn">Close</button>
+        <button class="btn-contact-whatsapp" id="btnWhatsAppAction">
+          <span>💬</span>
+          <span data-i18n="btnSendWhatsApp">Send via WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Post Travel Request Form (All Indian States & Cities) -->
+  <div class="modal-overlay" id="postRequestModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>📢</span>
+          <span>Post Your Travel Request (സഹായം ചോദിക്കൂ)</span>
+        </div>
+        <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="postRequestForm">
+        <div class="modal-body">
+          <div style="background: var(--primary-50); padding: 12px; border-radius: var(--radius-sm); font-size: 0.85rem; color: var(--primary-900);">
+            💡 <em>Don't hesitate if you have budget constraints or don't know Hindi/local language. Our community volunteers across India will read this and help you.</em>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Your Name / പേര് *</label>
+              <input type="text" id="reqCandidateName" class="form-input" placeholder="e.g. Rahul / Anjana" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Origin in Kerala / ജില്ല *</label>
+              <select id="reqFromDistrict" class="form-select">
+                <!-- Populated dynamically with all 14 Kerala districts -->
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Destination State / UT *</label>
+              <select id="reqToState" class="form-select">
+                <!-- Populated dynamically with all states -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Destination City *</label>
+              <select id="reqToCity" class="form-select">
+                <!-- Populated dynamically based on state -->
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Date of Interview / Exam *</label>
+              <input type="date" id="reqExamDate" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Budget Situation</label>
+              <select id="reqBudget" class="form-select">
+                <option value="Zero Budget (Need Free Shelter)">Zero Budget (Student - Need Free Shelter)</option>
+                <option value="Low Budget (< ₹500)">Low Budget (< ₹500)</option>
+                <option value="Moderate Budget (Need Route/Safety Advice Only)">Moderate Budget (Need Route/Safety Advice Only)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Interview / Exam Venue Details *</label>
+            <input type="text" id="reqPurpose" class="form-input" placeholder="e.g. SSC CGL at Kendriya Bhawan, or TCS Ion Digital Zone" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">What is your biggest fear or need? *</label>
+            <textarea id="reqFearMessage" class="form-textarea" placeholder="e.g. 'I don't speak Hindi, arriving at midnight at the railway station, terrified of getting lost or cheated. Need someone who can guide me on how to reach the exam center safely.'" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your WhatsApp / Phone Number (Optional / Kept safe)</label>
+            <input type="tel" id="reqContactInfo" class="form-input" placeholder="+91 9xxxx xxxxx">
+            <span class="form-hint">Only shared with verified volunteer helpers.</span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-close-btn">Cancel</button>
+          <button type="submit" class="btn-primary">
+            <span>📢 Post Travel Request</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Volunteer Registration Form (All States & Cities) -->
+  <div class="modal-overlay" id="volunteerModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span>❤️</span>
+          <span>Register as a Volunteer / Host (സഹായിയാകൂ)</span>
+        </div>
+        <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="volunteerForm">
+        <div class="modal-body">
+          <div style="background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm); font-size: 0.85rem; color: var(--text-muted);">
+            Are you a Malayali living, working, or studying anywhere outside Kerala? Even offering 15 minutes of phone guidance, station pickup, or a spare floor can change a young job seeker's life.
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Your Name / പേര് *</label>
+              <input type="text" id="volName" class="form-input" placeholder="e.g. Manu S. / Deepa Nair" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Profession / College *</label>
+              <input type="text" id="volRole" class="form-input" placeholder="e.g. Software Engineer / Student at IIT" required>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Current State / UT *</label>
+              <select id="volState" class="form-select">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Current City *</label>
+              <select id="volCity" class="form-select">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">WhatsApp Number *</label>
+              <input type="tel" id="volPhone" class="form-input" placeholder="+91 9xxxx xxxxx" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Your Native District in Kerala</label>
+              <select id="volOrigin" class="form-select">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Distance from Major Railway Station / Landmark</label>
+            <input type="text" id="volDistance" class="form-input" placeholder="e.g. 3 km from Central Station / 500m from Metro">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">How can you help our candidates? *</label>
+            <textarea id="volAbout" class="form-textarea" placeholder="Describe if you have a spare room, can guide via phone/metro, give homely food, or help them speak with auto drivers." required></textarea>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+            <label style="display:flex; align-items:center; gap:8px; font-size:0.86rem; cursor:pointer;">
+              <input type="checkbox" id="volCanProvideStay" checked>
+              <span>I can offer free or low-budget safe shelter (1-2 nights) for candidates</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:0.86rem; cursor:pointer;">
+              <input type="checkbox" id="volIsWomenOnly">
+              <span>This is exclusively for female candidates (Protected by female hosts/families)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-close-btn">Cancel</button>
+          <button type="submit" class="btn-primary">
+            <span>❤️ Join as Volunteer</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 4: Emergency SOS Modal -->
+  <div class="modal-overlay" id="sosModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header" style="background:var(--danger-100); border-bottom-color:#fca5a5;">
+        <div class="modal-title" style="color:var(--danger-700);">
+          <span>🚨</span>
+          <span>Emergency Assistance & Quick Safety Pod</span>
+        </div>
+        <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size:0.9rem; color:var(--text-main);">
+          If you feel unsafe, stranded, or lost in an unfamiliar city, use these 24x7 verified lifelines immediately:
+        </p>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="tel:18004253939" class="btn-primary" style="background:#0f766e; justify-content:center; padding:14px;">
+            📞 Call NORKA Roots 24x7 Interstate Toll-Free (1800 425 3939)
+          </a>
+          <a href="tel:139" class="btn-secondary" style="justify-content:center; padding:12px;">
+            🚆 Call Railway Police RPF (139) - Available on any moving train
+          </a>
+          <a href="tel:1090" class="btn-secondary" style="justify-content:center; padding:12px; color:var(--danger-700); border-color:var(--danger-500);">
+            👩 Women Power Line (1090) - Immediate 24x7 Police Support
+          </a>
+          <a href="tel:112" class="btn-secondary" style="justify-content:center; padding:12px;">
+            🚨 National Emergency Police Response (112)
+          </a>
+        </div>
+
+        <div style="background:var(--bg-main); padding:14px; border-radius:var(--radius-sm); margin-top:8px;">
+          <strong>Quick Tip for Safe Travel:</strong>
+          <p style="font-size:0.84rem; color:var(--text-muted); margin-top:4px;">
+            Always share your live WhatsApp location with your family members in Kerala before boarding any auto or taxi.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary modal-close-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Living Friendly Malayali Companion Widget (Anjali Chechi) -->
+  <div class="companion-floating-trigger" id="companionTrigger" onclick="window.KoottuApp.toggleCompanionChat()" title="Talk with your Malayali Travel Companion">
+    <div class="companion-avatar-wrap">
+      <img src="assets/friendly-companion.jpg" alt="Anjali - Your Friendly Malayali Companion" width="52" height="52">
+      <span class="companion-online-indicator"></span>
+    </div>
+    <div class="companion-speech-snippet">
+      <span class="companion-speech-title">
+        <span>അഞ്ജലി (Anjali)</span>
+        <span style="font-size:0.75rem; background:var(--primary-100); color:var(--primary-800); padding:2px 6px; border-radius:10px;">കൂട്ടുകാരി</span>
+      </span>
+      <span class="companion-speech-hint">💬 സംസാരിക്കാം, പേടി വേണ്ട!</span>
+    </div>
+  </div>
+
+  <!-- Living Companion Chat Window -->
+  <div class="companion-chat-window" id="companionChatWindow">
+    <div class="companion-chat-header">
+      <div class="companion-header-person">
+        <div style="width:36px; height:36px; border-radius:50%; overflow:hidden; border:2px solid white;">
+          <img src="assets/friendly-companion.jpg" alt="Anjali" width="36" height="36" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <div>
+          <strong style="font-size:0.95rem;">അഞ്ജലി (Anjali)</strong>
+          <div style="font-size:0.75rem; opacity:0.9;">🟢 ഓൺലൈനിൽ ഉണ്ട് • കൂടെയുണ്ട്</div>
+        </div>
+      </div>
+      <button onclick="window.KoottuApp.toggleCompanionChat()" style="background:transparent; border:none; color:white; font-size:1.3rem; cursor:pointer;">&times;</button>
+    </div>
+
+    <div class="companion-chat-body" id="companionChatBody">
+      <div class="chat-bubble-friend">
+        <strong>നമസ്കാരം! ഞാൻ അഞ്ജലി.</strong>
+        <p style="margin-top:4px;">
+          നിങ്ങളുടെ സ്വന്തം മലയാളി കൂട്ടുകാരി. കേരളത്തിൽ നിന്ന് ദൂരദേശങ്ങളിലേക്ക് ആദ്യമായി പോകുമ്പോൾ പേടിയും പരിഭ്രമവും ഉണ്ടാകുന്നത് തികച്ചും സ്വാഭാവികമാണ്. ഞാനും ഒരുപാട് അനുഭവിച്ചതാണ്. എന്തിനാണ് ഏറ്റവും കൂടുതൽ പേടി തോന്നുന്നത്? എന്നോട് തുറന്നു പറയൂ:
+        </p>
+        <button class="btn-speak-companion" onclick="window.KoottuApp.speakCompanionText()">
+          🔊 ഈ സന്ദേശം കേൾക്കൂ (Listen Voice)
+        </button>
+      </div>
+
+      <div class="chat-quick-options">
+        <button class="chat-option-btn" onclick="window.KoottuApp.askCompanion('fear_hindi')">
+          😨 "ചേച്ചീ, എനിക്ക് ഹിന്ദി അറിയില്ല, സ്റ്റേഷനിൽ ഇറങ്ങിയാൽ എന്തുചെയ്യും?"
+        </button>
+        <button class="chat-option-btn" onclick="window.KoottuApp.askCompanion('no_money')">
+          💰 "കയ്യിൽ പണമില്ല, ഹോട്ടലിൽ നിൽക്കാൻ പറ്റില്ല, എവിടെ കിടക്കും?"
+        </button>
+        <button class="chat-option-btn" onclick="window.KoottuApp.askCompanion('women_safety')">
+          👩 "ഞാൻ പെൺകുട്ടിയാണ്, തനിച്ചു യാത്ര ചെയ്യാൻ വീട്ടിൽ സമ്മതിക്കുന്നില്ല..."
+        </button>
+        <button class="chat-option-btn" onclick="window.KoottuApp.askCompanion('station_scam')">
+          🚖 "സ്റ്റേഷനിലെ ഓട്ടോക്കാരെ എങ്ങനെ വിശ്വസിക്കും?"
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-title">Koottu <span style="font-size: 0.95rem; font-weight:700; color:var(--accent-gold);">| കൂട്ട്</span></div>
+        <p>
+          "ദൂരദേശങ്ങളിൽ നമ്മൾ ഒറ്റയ്ക്കല്ല" (You are never alone in far lands). A community-powered initiative built to protect, shelter, and guide Kerala candidates appearing for interviews and competitive examinations across all Indian states and major cities.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Destination Hubs</h4>
+        <ul class="footer-list">
+          <li><a href="#" onclick="window.KoottuApp.switchTab('hosts'); document.getElementById('stateSelect').value='Uttar Pradesh'; document.getElementById('stateSelect').dispatchEvent(new Event('change')); return false;">Uttar Pradesh (Lucknow, Kanpur, Noida)</a></li>
+          <li><a href="#" onclick="window.KoottuApp.switchTab('hosts'); document.getElementById('stateSelect').value='Delhi (NCR)'; document.getElementById('stateSelect').dispatchEvent(new Event('change')); return false;">Delhi NCR (New Delhi, Anand Vihar)</a></li>
+          <li><a href="#" onclick="window.KoottuApp.switchTab('hosts'); document.getElementById('stateSelect').value='Maharashtra'; document.getElementById('stateSelect').dispatchEvent(new Event('change')); return false;">Maharashtra (Mumbai, Pune)</a></li>
+          <li><a href="#" onclick="window.KoottuApp.switchTab('hosts'); document.getElementById('stateSelect').value='Karnataka'; document.getElementById('stateSelect').dispatchEvent(new Event('change')); return false;">Karnataka (Bengaluru, Mangaluru)</a></li>
+          <li><a href="#" onclick="window.KoottuApp.switchTab('hosts'); document.getElementById('stateSelect').value='Tamil Nadu'; document.getElementById('stateSelect').dispatchEvent(new Event('change')); return false;">Tamil Nadu (Chennai, Coimbatore)</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Safety & Community</h4>
+        <ul class="footer-list">
+          <li><a href="#" onclick="window.KoottuApp.switchTab('survival'); return false;">Hindi Survival Phrases</a></li>
+          <li><a href="#" onclick="window.KoottuApp.switchTab('emergency'); return false;">NORKA Roots & Helplines</a></li>
+          <li><a href="#" onclick="window.KoottuApp.openVolunteerModal(); return false;">Offer a Spare Room / Shelter</a></li>
+          <li><a href="#" onclick="window.KoottuApp.openPostRequestModal(); return false;">Post Travel SOS</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>Built with compassion for Kerala's job seekers & students across India. 100% Free Public Service.</span>
+      <span>Koottu Community Network © 2026</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
