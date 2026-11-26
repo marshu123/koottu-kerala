@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marshu123.github.io/koottu-kerala/sitemap.xml

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#042f2c"/>
+      <stop offset="100%" style="stop-color:#0f766e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#14b8a6"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle pattern circles -->
+  <circle cx="1050" cy="100" r="250" fill="rgba(20,184,166,0.08)"/>
+  <circle cx="150" cy="530" r="200" fill="rgba(245,158,11,0.07)"/>
+
+  <!-- Logo box -->
+  <rect x="80" y="80" width="90" height="90" rx="20" fill="#14b8a6"/>
+  <text x="125" y="150" font-family="serif" font-size="52" fill="white" text-anchor="middle">കൂ</text>
+
+  <!-- Brand name -->
+  <text x="190" y="120" font-family="system-ui, sans-serif" font-size="52" font-weight="800" fill="white">Koottu</text>
+  <text x="190" y="158" font-family="system-ui, sans-serif" font-size="28" font-weight="600" fill="#2dd4bf">കൂട്ട്  |  Kerala Community Network</text>
+
+  <!-- Accent bar -->
+  <rect x="80" y="210" width="600" height="5" rx="3" fill="url(#accent)"/>
+
+  <!-- Headline -->
+  <text x="80" y="295" font-family="system-ui, sans-serif" font-size="48" font-weight="800" fill="white">Traveling alone for an interview?</text>
+  <text x="80" y="360" font-family="system-ui, sans-serif" font-size="48" font-weight="800" fill="#f59e0b">You are NEVER alone.</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="425" font-family="system-ui, sans-serif" font-size="26" fill="#94a3b8">Free safe stay · Hindi survival guide · Emergency helplines</text>
+  <text x="80" y="462" font-family="system-ui, sans-serif" font-size="26" fill="#94a3b8">Trusted Malayali hosts across all 28 Indian states</text>
+
+  <!-- Badges -->
+  <rect x="80" y="510" width="220" height="48" rx="24" fill="rgba(20,184,166,0.2)" stroke="#14b8a6" stroke-width="1.5"/>
+  <text x="190" y="541" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#2dd4bf" text-anchor="middle">🏠 Free Stay</text>
+
+  <rect x="316" y="510" width="220" height="48" rx="24" fill="rgba(20,184,166,0.2)" stroke="#14b8a6" stroke-width="1.5"/>
+  <text x="426" y="541" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#2dd4bf" text-anchor="middle">🗣️ Malayalam Guide</text>
+
+  <rect x="552" y="510" width="220" height="48" rx="24" fill="rgba(20,184,166,0.2)" stroke="#14b8a6" stroke-width="1.5"/>
+  <text x="662" y="541" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#2dd4bf" text-anchor="middle">🛡️ 100% Free</text>
+
+  <!-- URL -->
+  <text x="1120" y="590" font-family="system-ui, sans-serif" font-size="22" fill="#64748b" text-anchor="end">marshu123.github.io/koottu-kerala</text>
+</svg>
